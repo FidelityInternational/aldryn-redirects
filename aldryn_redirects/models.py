@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _, ugettext
 
@@ -17,7 +17,7 @@ from .validators import validate_inbound_route, validate_outbound_route
 @python_2_unicode_compatible
 class Redirect(TranslatableModel):
     site = models.ForeignKey(
-        Site, related_name='aldryn_redirects_redirect_set')
+        Site, related_name='aldryn_redirects_redirect_set', on_delete=models.CASCADE)
     old_path = models.CharField(
         _('redirect from'), max_length=400, db_index=True,
         help_text=_(
