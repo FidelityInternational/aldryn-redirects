@@ -19,9 +19,9 @@ from .models import Redirect, StaticRedirect, StaticRedirectInboundRouteQueryPar
 
 
 class DeletionMixin(object):
-    actions = ['delete_selected']
+    actions = ['delete_selected_redirect']
 
-    def delete_selected(self, request, queryset):
+    def delete_selected_redirect(self, request, queryset):
         max_items_deletion = getattr(settings, 'DATA_UPLOAD_MAX_NUMBER_FIELDS', 1000)  # COMPAT: Django<1.10
 
         if queryset.count() > max_items_deletion:
@@ -37,7 +37,7 @@ class DeletionMixin(object):
         object_label = self.opts.verbose_name_plural if deleted_qty > 1 else self.opts.verbose_name
         msg = _('Successfully deleted {qty} {object_label}.').format(qty=deleted_qty, object_label=object_label)
         self.message_user(request, msg)
-    delete_selected.short_description = _('Delete selected objects')
+    delete_selected_redirect.short_description = _('Delete selected objects')
 
 
 class RedirectAdmin(DeletionMixin, AllTranslationsMixin, TranslatableAdmin):
@@ -47,6 +47,11 @@ class RedirectAdmin(DeletionMixin, AllTranslationsMixin, TranslatableAdmin):
     radio_fields = {'site': admin.VERTICAL}
     export_filename = 'redirects-%Y-%m-%d.csv'
     export_headers = ['Domain', 'Old', 'New', 'Language']
+    actions = DeletionMixin.actions
+
+    def get_actions(self, request):
+        print("Ignoring the debug mate")
+        return []
 
     def get_urls(self):
         from django.conf.urls import url
@@ -138,6 +143,7 @@ class StaticRedirectAdmin(DeletionMixin, admin.ModelAdmin):
     list_filter = ('sites',)
     list_display = ('inbound_route', 'outbound_route')
     search_fields = list_display
+    actions = DeletionMixin.actions
 
     # Custom attributes
     export_filename = 'static-redirects-%Y-%m-%d.csv'

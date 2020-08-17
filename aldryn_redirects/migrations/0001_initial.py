@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('old_path', models.CharField(help_text="This should be an absolute path, excluding the domain name. Example: '/events/search/'.", max_length=200, verbose_name='redirect from', db_index=True)),
-                ('site', models.ForeignKey(related_name='redirects_hvad_set', to='sites.Site')),
+                ('site', models.ForeignKey(on_delete=models.deletion.CASCADE, related_name='redirects_hvad_set', to='sites.Site')),
             ],
             options={
                 'ordering': ('old_path',),
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('new_path', models.CharField(help_text="This can be either an absolute path (as above) or a full URL starting with 'http://'.", max_length=200, verbose_name='redirect to', blank=True)),
                 ('language_code', models.CharField(max_length=15, db_index=True)),
-                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_redirects.Redirect', null=True)),
+                ('master', models.ForeignKey(on_delete=models.deletion.CASCADE, related_name='translations', editable=False, to='aldryn_redirects.Redirect', null=True)),
             ],
             options={
                 'managed': True,
