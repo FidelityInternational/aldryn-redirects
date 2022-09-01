@@ -23,9 +23,12 @@ class RedirectFallbackMiddleware(object):
         )
 
         if settings.APPEND_SLASH and path.endswith('/'):
-            path_with_queries_no_slash = path[:-1] + path_with_queries[len(path):]
+            path_length = len(path)
+            if path_length > 1:
+                path = path[:-1]
+            path_with_queries_no_slash = path + path_with_queries[path_length:]
             queries |= (
-                Q(old_path__iexact=path[:-1])
+                Q(old_path__iexact=path)
                 | Q(old_path__iexact=path_with_queries_no_slash)
             )
 

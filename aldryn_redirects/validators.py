@@ -21,7 +21,7 @@ def validate_inbound_route(value):
     if not(value.startswith('/')):
         raise ValidationError(_('Start this field with a slash.'))
 
-    if value.endswith('/'):
+    if value.endswith('/') and len(value) > 1:
         raise ValidationError(_('Do not append a trailing slash.'))
 
     if not re.match(r'^[a-zA-Z0-9\.\_\-\:\/\?\#\&\=\%]+$', value):
