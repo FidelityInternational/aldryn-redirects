@@ -1,8 +1,11 @@
 #!/usr/bin/env python
-from __future__ print_function, division
+from __future__ import print_function, division
 
 HELPER_SETTINGS = {
     'MIDDLEWARE': [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
         'aldryn_redirects.middleware.RedirectFallbackMiddleware',
     ],
     'INSTALLED_APPS': [
@@ -29,7 +32,7 @@ HELPER_SETTINGS = {
 
 
 def run():
-    from djangocms_helper import runner
+    from app_helper import runner
     runner.cms('aldryn_redirects')
 
 
