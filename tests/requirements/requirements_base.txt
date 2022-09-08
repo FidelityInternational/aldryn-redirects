@@ -1,4 +1,4 @@
 coverage>=4.4.2
-djangocms-app-helper
+django-app-helper
 flake8>=3.0.4
 tox>=2.9.1
