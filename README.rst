@@ -1,10 +1,8 @@
-**Deprecated**
+** This app is the Fidelity fork of the Divio app aldryn-redirects **
 
-This project is no longer supported.
-
-Divio will undertake no further development or maintenance of this project. If you are interested in continuing to develop it, use the fork functionality from GitHub. We are not able to transfer ownership of the repository to another party.
-
-Please have a look at alternatives such as Djangos `redirects app <https://docs.djangoproject.com/en/dev/ref/contrib/redirects/>`_.
+Divio dropped support for the original app, this is a fork named aldryn-redirects-fil, which diverges from the original
+to bring in django 3.2 support, as well as other FIL specific functionality. To simplify the releases, the app version
+has been set to 1.0.0 for the release after the divergence.
 
 ################
 Aldryn Redirects
