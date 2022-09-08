@@ -1,5 +1,5 @@
-#!/usr/bin/env python # NOQA
-from __future__ import print_function, division
+#!/usr/bin/env python
+from __future__ import division, print_function
 
 HELPER_SETTINGS = {
     'MIDDLEWARE': [

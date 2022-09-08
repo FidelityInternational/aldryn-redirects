@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from parler.admin import TranslatableAdmin
-
 from tablib import Dataset
 
 from .forms import RedirectsImportForm, StaticRedirectsImportForm
