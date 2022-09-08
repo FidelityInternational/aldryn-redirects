@@ -28,6 +28,7 @@ HELPER_SETTINGS = {
         ('en', 'English'),
         ('pt-br', 'Brazilian Portugues'),
     ],
+    'SILENCED_SYSTEM_CHECKS': ['admin.E130'],
 }
 
 
