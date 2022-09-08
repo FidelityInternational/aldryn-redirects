@@ -5,9 +5,9 @@ from django.shortcuts import reverse
 from cms.models import Site
 from cms.test_utils.testcases import CMSTestCase
 
-from aldryn_redirects.models import Redirect, StaticRedirect
-
 from bs4 import BeautifulSoup
+
+from aldryn_redirects.models import Redirect, StaticRedirect
 
 
 class AdminRedirectRootTestCase(CMSTestCase):
