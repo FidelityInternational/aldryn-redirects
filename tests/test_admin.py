@@ -17,6 +17,12 @@ class AdminRedirectRootTestCase(CMSTestCase):
         self.add_url = reverse("admin:aldryn_redirects_staticredirect_add")
 
     def decode_fancy_quotes(self, string):
+        """
+        When running tests on Windows, it is possible that fancy quotes will be returned,
+        in order to remain OS agnostic when running tests, convert these to regular double quotes.
+        :param string: String containing fancy quote
+        :return: String without fancy quotes
+        """
         return re.sub(u'[\u201c\u201d]', '"', string)
 
     def test_static_redirect_allows_root(self):
