@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function, division
 
+
 HELPER_SETTINGS = {
     'MIDDLEWARE': [
         'django.contrib.sessions.middleware.SessionMiddleware',
