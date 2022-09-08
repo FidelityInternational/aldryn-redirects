@@ -25,5 +25,16 @@ class RedirectFallbackMiddlewareTestCase(TestCase):
         self.assertEquals(response.status_code, 301)
         self.assertEquals(response.url, 'http://example.com/dest?keep=this')
 
+    def test_redirect_found_from_root(self):
+        redirect = StaticRedirect.objects.create(inbound_route='/', outbound_route='/dest?keep=this')
+        redirect.sites.add(self.site)
+        redirect.query_params.create(key='query1', value='param1')
+        request_from_root = RequestFactory().get('http://example.com/?query1=param1')
+
+        response = RedirectFallbackMiddleware().process_request(request_from_root)
+
+        self.assertEquals(response.status_code, 301)
+        self.assertEquals(response.url, 'http://example.com/dest?keep=this')
+
     def test_redirect_not_found(self):
         self.assertIsNone(RedirectFallbackMiddleware().process_request(self.request))
