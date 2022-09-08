@@ -1,3 +1,4 @@
+asgiref
 coverage>=4.4.2
 django-app-helper
 flake8>=3.0.4
