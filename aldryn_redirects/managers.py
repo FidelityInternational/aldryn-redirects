@@ -9,7 +9,7 @@ class StaticRedirectManager(models.QuerySet):
         path_info = request.path_info
         request_query_params = get_query_params_dict(request.get_full_path())
 
-        if settings.APPEND_SLASH and path_info.endswith('/'):
+        if settings.APPEND_SLASH and path_info.endswith('/') and len(path_info) > 1:
             candidates = self.filter(sites__id__exact=settings.SITE_ID, inbound_route=path_info[:-1])
         else:
             candidates = self.filter(sites__id__exact=settings.SITE_ID, inbound_route=path_info)
