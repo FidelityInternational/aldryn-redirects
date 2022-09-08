@@ -1,3 +1,11 @@
+**Deprecated**
+
+This project is no longer supported.
+
+Divio will undertake no further development or maintenance of this project. If you are interested in continuing to develop it, use the fork functionality from GitHub. We are not able to transfer ownership of the repository to another party.
+
+Please have a look at alternatives such as Djangos `redirects app <https://docs.djangoproject.com/en/dev/ref/contrib/redirects/>`_.
+
 ################
 Aldryn Redirects
 ################
@@ -47,8 +55,8 @@ INSTALLED_APPS += [
     'aldryn_redirects'
 ]
 
-# add the middleware somewhere near the top of MIDDLEWARE_CLASSES
+# add the middleware somewhere near the top of MIDDLEWARE
 
-MIDDLEWARE_CLASSES.insert(
+MIDDLEWARE.insert(
     0, 'aldryn_redirects.middleware.RedirectFallbackMiddleware')
 ```
