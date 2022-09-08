@@ -1,0 +1,11 @@
+aldryn-translation-tools
+asgiref
+coverage>=4.4.2
+django-app-helper
+django-parler
+flake8>=3.0.4
+tablib
+tox>=2.9.1
+
+# Unreleased django-cms 4.0 compatible packages
+http://github.com/django-cms/django-cms/tarball/release/4.0.1.x#egg=django-cms

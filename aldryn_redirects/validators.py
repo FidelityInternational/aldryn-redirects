@@ -1,9 +1,9 @@
-from __future__ import print_function, division
+from __future__ import division, print_function
+
 import re
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
 from six.moves.urllib.parse import urlparse
 
 
@@ -17,7 +17,7 @@ def validate_inbound_route(value):
     if parsed_value.query:
         raise ValidationError(_('Do not provide the query params. Use "Query params" below instead.'))
 
-    if not(value.startswith('/')):
+    if not value.startswith('/'):
         raise ValidationError(_('Start this field with a slash.'))
 
     if value.endswith('/'):
