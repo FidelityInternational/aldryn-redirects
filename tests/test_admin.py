@@ -10,7 +10,7 @@ from aldryn_redirects.models import Redirect, StaticRedirect
 
 class AdminRedirectRootTestCase(CMSTestCase):
     def setUp(self):
-        self.user = super().get_superuser()
+        self.user = self.get_superuser()
         self.site = Site.objects.first()
         self.add_url = reverse("admin:aldryn_redirects_staticredirect_add")
 
