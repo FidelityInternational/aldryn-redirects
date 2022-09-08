@@ -1,10 +1,6 @@
 name: CodeCov
 
-on:
-  pull_request:
-  push:
-    branches:
-      -master
+on: [push, pull_request]
 
 jobs:
   unit-tests:
