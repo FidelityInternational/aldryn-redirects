@@ -3,6 +3,9 @@ from __future__ import print_function, division
 
 HELPER_SETTINGS = {
     'MIDDLEWARE': [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
         'aldryn_redirects.middleware.RedirectFallbackMiddleware',
     ],
     'INSTALLED_APPS': [
@@ -25,6 +28,7 @@ HELPER_SETTINGS = {
         ('en', 'English'),
         ('pt-br', 'Brazilian Portugues'),
     ],
+    'SILENCED_SYSTEM_CHECKS': ['admin.E130'],
 }
 
 
