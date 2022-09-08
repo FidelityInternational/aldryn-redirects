@@ -1,4 +1,4 @@
-from six.moves.urllib.parse import urlparse, parse_qsl, urlencode
+from six.moves.urllib.parse import parse_qsl, urlencode, urlparse
 
 
 def get_query_params_dict(url):
