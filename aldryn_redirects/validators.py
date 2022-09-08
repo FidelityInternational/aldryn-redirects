@@ -1,9 +1,9 @@
 from __future__ import division, print_function
+
 import re
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
 from six.moves.urllib.parse import urlparse
 
 

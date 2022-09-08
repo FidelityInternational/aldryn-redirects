@@ -1,19 +1,19 @@
-from tablib import Dataset
-
+from aldryn_translation_tools.admin import AllTranslationsMixin
 from django.conf import settings
 from django.contrib import admin, messages
-from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _, gettext
-
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from parler.admin import TranslatableAdmin
 
-from aldryn_translation_tools.admin import AllTranslationsMixin
+from tablib import Dataset
 
 from .forms import RedirectsImportForm, StaticRedirectsImportForm
-from .models import Redirect, StaticRedirect, StaticRedirectInboundRouteQueryParam
+from .models import (Redirect, StaticRedirect,
+                     StaticRedirectInboundRouteQueryParam)
 
 
 class DeletionMixin():

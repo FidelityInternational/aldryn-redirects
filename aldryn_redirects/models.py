@@ -1,12 +1,13 @@
 from django.contrib.sites.models import Site
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _, gettext
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from parler.models import TranslatableModel, TranslatedFields
-from six.moves.urllib.parse import urlparse, urljoin
-
-from .managers import StaticRedirectManager, StaticRedirectInboundRouteQueryParamManager
+from six.moves.urllib.parse import urljoin, urlparse
+from .managers import (StaticRedirectInboundRouteQueryParamManager,
+                       StaticRedirectManager)
 from .utils import add_query_params_to_url
 from .validators import validate_inbound_route, validate_outbound_route
 
