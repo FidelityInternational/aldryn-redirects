@@ -17,7 +17,7 @@ def validate_inbound_route(value):
     if parsed_value.query:
         raise ValidationError(_('Do not provide the query params. Use "Query params" below instead.'))
 
-    if not(value.startswith('/')):
+    if not value.startswith('/'):
         raise ValidationError(_('Start this field with a slash.'))
 
     if value.endswith('/'):
