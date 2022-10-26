@@ -29,6 +29,7 @@ HELPER_SETTINGS = {
         ('pt-br', 'Brazilian Portugues'),
     ],
     'SILENCED_SYSTEM_CHECKS': ['admin.E130'],
+    'SECRET_KEY': 'aldrynredirectstestsuitekey',
 }
 
 

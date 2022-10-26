@@ -67,3 +67,33 @@ class AdminRedirectRootTestCase(CMSTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(expected_result, decoded_result)
         self.assertEqual(Redirect.objects.all().count(), 1)
+
+    def test_cannot_add_duplicate_redirect_for_site(self):
+        """
+        Attempting to add a redirect for an inbound path and site when matching redirect already exists results in an
+        error
+        """
+        redirect = StaticRedirect.objects.create(
+            inbound_route="/", outbound_route="http://example.com",
+        )
+        redirect.sites.add(self.site)
+        self.assertEqual(StaticRedirect.objects.count(), 1)
+
+        add_url = reverse("admin:aldryn_redirects_staticredirect_add")
+        redirect_data = {
+            "sites": [self.site.id, ],
+            "inbound_route": "/",
+            "outbound_route": "/test-page",
+            'query_params-TOTAL_FORMS': '1',
+            'query_params-INITIAL_FORMS': '0',
+            'query_params-MAX_NUM_FORMS': '',
+        }
+
+        with self.login_user_context(self.user):
+            response = self.client.post(add_url, data=redirect_data, follow=True)
+
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        errors = soup.find("ul", {"class": "errorlist"})
+        self.assertIn(f"Redirect already exists from '/' and the selected sites: {self.site.domain}", str(errors))
+        self.assertEqual(StaticRedirect.objects.count(), 1)

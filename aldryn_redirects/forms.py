@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from tablib import Dataset
 
 from .importers import RedirectImporter, StaticRedirectImporter
+from .models import StaticRedirect
 
 
 class RedirectsImportForm(forms.Form):
@@ -37,3 +38,29 @@ class RedirectsImportForm(forms.Form):
 
 class StaticRedirectsImportForm(RedirectsImportForm):
     importer_class = StaticRedirectImporter
+
+
+class StaticRedirectForm(forms.ModelForm):
+
+    class Meta:
+        model = StaticRedirect
+        fields = ["sites", "inbound_route", "outbound_route"]
+
+    def clean(self):
+        """
+        Adds validation to ensure that a StaticRedirect is unique between sites and the inbound_route
+        """
+        cleaned_data = super().clean()
+        sites = cleaned_data.get("sites")
+        inbound_route = cleaned_data.get("inbound_route")
+
+        existing_redirects = StaticRedirect.objects.filter(sites__in=sites, inbound_route=inbound_route).distinct()
+        if not existing_redirects:
+            return cleaned_data
+
+        other_redirects = existing_redirects.exclude(pk=self.instance.pk).distinct()
+        if not other_redirects:
+            return cleaned_data
+
+        sites = ", ".join(list(other_redirects.values_list("sites__domain", flat=True)))
+        raise ValidationError(f"Redirect already exists from '{inbound_route}' and the selected sites: {sites}")

@@ -10,7 +10,8 @@ from django.utils.translation import gettext_lazy as _
 from parler.admin import TranslatableAdmin
 from tablib import Dataset
 
-from .forms import RedirectsImportForm, StaticRedirectsImportForm
+from .forms import (RedirectsImportForm, StaticRedirectForm,
+                    StaticRedirectsImportForm)
 from .models import (Redirect, StaticRedirect,
                      StaticRedirectInboundRouteQueryParam)
 
@@ -135,6 +136,7 @@ class StaticRedirectAdmin(DeletionMixin, admin.ModelAdmin):
     list_filter = ('sites',)
     list_display = ('inbound_route', 'outbound_route')
     search_fields = list_display
+    form = StaticRedirectForm
 
     # Custom attributes
     export_filename = 'static-redirects-%Y-%m-%d.csv'
