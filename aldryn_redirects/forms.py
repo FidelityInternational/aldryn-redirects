@@ -42,6 +42,10 @@ class StaticRedirectsImportForm(RedirectsImportForm):
 
 class StaticRedirectForm(forms.ModelForm):
 
+    class Meta:
+        model = StaticRedirect
+        fields = ["sites", "inbound_route", "outbound_route"]
+
     def clean(self):
         """
         Adds validation to ensure that a StaticRedirect is unique between sites and the inbound_route
@@ -60,7 +64,3 @@ class StaticRedirectForm(forms.ModelForm):
 
         sites = ", ".join(list(other_redirects.values_list("sites__domain", flat=True)))
         raise ValidationError(f"Redirect already exists from '{inbound_route}' and the selected sites: {sites}")
-
-    class Meta:
-        model = StaticRedirect
-        fields = ["sites", "inbound_route", "outbound_route"]
