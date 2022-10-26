@@ -4,6 +4,9 @@ Changelog
 
 Unreleased
 ==========
+
+1.0.1 (2022-10-26)
+==================
 * fix: allow only one redirect for a site and outbound path combination
 
 1.0.0 (2022-09-08)
