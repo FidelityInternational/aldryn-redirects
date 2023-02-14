@@ -22,7 +22,7 @@ CLASSIFIERS = [
 ]
 
 setup(
-    name='aldryn-redirects',
+    name='aldryn-redirects-fil',
     version=__version__,
     description='A modified version of django.contrib.redirects with multilingual target URLs.',
     author='Divio AG',
