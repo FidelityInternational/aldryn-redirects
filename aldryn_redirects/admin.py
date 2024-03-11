@@ -1,24 +1,33 @@
-from aldryn_translation_tools.admin import AllTranslationsMixin
 from django.conf import settings
 from django.contrib import admin, messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
+
+from aldryn_translation_tools.admin import AllTranslationsMixin
 from parler.admin import TranslatableAdmin
 from tablib import Dataset
 
-from .forms import (RedirectsImportForm, StaticRedirectForm,
-                    StaticRedirectsImportForm)
-from .models import (Redirect, StaticRedirect,
-                     StaticRedirectInboundRouteQueryParam)
+from .forms import (
+    RedirectsImportForm,
+    StaticRedirectForm,
+    StaticRedirectsImportForm,
+)
+from .models import (
+    Redirect,
+    StaticRedirect,
+    StaticRedirectInboundRouteQueryParam,
+)
 
 
 class DeletionMixin():
     actions = ['delete_selected']
 
+    @admin.action(
+        description=_('Delete selected objects')
+    )
     def delete_selected(self, request, queryset):
         max_items_deletion = getattr(settings, 'DATA_UPLOAD_MAX_NUMBER_FIELDS', 1000)  # COMPAT: Django<1.10
 
@@ -35,9 +44,9 @@ class DeletionMixin():
         object_label = self.opts.verbose_name_plural if deleted_qty > 1 else self.opts.verbose_name
         msg = _('Successfully deleted {qty} {object_label}.').format(qty=deleted_qty, object_label=object_label)
         self.message_user(request, msg)
-    delete_selected.short_description = _('Delete selected objects')
 
 
+@admin.register(Redirect)
 class RedirectAdmin(DeletionMixin, AllTranslationsMixin, TranslatableAdmin):
     list_display = ('old_path',)
     list_filter = ('site',)
@@ -47,12 +56,12 @@ class RedirectAdmin(DeletionMixin, AllTranslationsMixin, TranslatableAdmin):
     export_headers = ['Domain', 'Old', 'New', 'Language']
 
     def get_urls(self):
-        from django.conf.urls import url
+        from django.urls import re_path
 
         def pattern(regex, fn, name):
             args = [regex, self.admin_site.admin_view(fn)]
             url_name = "%s_%s_%s" % (self.opts.app_label, self.opts.model_name, name)
-            return url(*args, name=url_name)
+            return re_path(*args, name=url_name)
 
         url_patterns = [
             pattern(r'export/$', self.export_view, 'export'),
@@ -130,6 +139,7 @@ class StaticRedirectInboundRouteQueryParamInline(admin.TabularInline):
     extra = 1
 
 
+@admin.register(StaticRedirect)
 class StaticRedirectAdmin(DeletionMixin, admin.ModelAdmin):
     inlines = [StaticRedirectInboundRouteQueryParamInline]
     filter_horizontal = ('sites',)
@@ -143,12 +153,12 @@ class StaticRedirectAdmin(DeletionMixin, admin.ModelAdmin):
     export_headers = ['domain', 'inbound_route', 'outbound_route']
 
     def get_urls(self):
-        from django.conf.urls import url
+        from django.urls import re_path
 
         def pattern(regex, fn, name):
             args = [regex, self.admin_site.admin_view(fn)]
             url_name = "%s_%s_%s" % (self.opts.app_label, self.opts.model_name, name)
-            return url(*args, name=url_name)
+            return re_path(*args, name=url_name)
 
         url_patterns = [
             pattern(r'export/$', self.export_view, 'export'),
@@ -215,7 +225,3 @@ class StaticRedirectAdmin(DeletionMixin, admin.ModelAdmin):
             'errors': form.errors,
         }
         return render(request, 'admin/aldryn_redirects/staticredirect/import_form.html', context)
-
-
-admin.site.register(Redirect, RedirectAdmin)
-admin.site.register(StaticRedirect, StaticRedirectAdmin)

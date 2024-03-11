@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+
 from tablib import Dataset
 
 from .importers import RedirectImporter, StaticRedirectImporter

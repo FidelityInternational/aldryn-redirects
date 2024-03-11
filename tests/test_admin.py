@@ -1,9 +1,11 @@
 import re
 
-from bs4 import BeautifulSoup
+from django.shortcuts import reverse
+
 from cms.models import Site
 from cms.test_utils.testcases import CMSTestCase
-from django.shortcuts import reverse
+
+from bs4 import BeautifulSoup
 
 from aldryn_redirects.models import Redirect, StaticRedirect
 

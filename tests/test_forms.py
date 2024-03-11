@@ -1,7 +1,8 @@
-from cms.test_utils.testcases import CMSTestCase
-from cms.utils import get_current_site
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
+
+from cms.test_utils.testcases import CMSTestCase
+from cms.utils import get_current_site
 
 from aldryn_redirects.forms import StaticRedirectForm
 from aldryn_redirects.models import StaticRedirect
