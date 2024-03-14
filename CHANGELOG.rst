@@ -7,6 +7,7 @@ Unreleased
 * Introduced Django 4.2 support.
 * Dropped Support for Django<3.1
 * Dropped the dependency of `aldryn-translation-tools`
+* Dropped support for python<3.8
 
 1.0.2 (2023-02-24)
 ==================
