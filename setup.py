@@ -2,10 +2,10 @@ from setuptools import find_packages, setup
 
 from aldryn_redirects import __version__
 
+
 REQUIREMENTS = [
     'tablib',
     'django-parler',
-    'aldryn-translation-tools',
 ]
 
 CLASSIFIERS = [

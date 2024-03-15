@@ -1,11 +1,16 @@
 from __future__ import division, print_function
 
 from django.contrib.sites.models import Site
+from django.http.response import HttpResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
 
 from aldryn_redirects.middleware import RedirectFallbackMiddleware
 from aldryn_redirects.models import StaticRedirect
+
+
+def get_response():
+    return HttpResponse()
 
 
 class RedirectFallbackMiddlewareTestCase(TestCase):
@@ -20,7 +25,7 @@ class RedirectFallbackMiddlewareTestCase(TestCase):
         redirect.sites.add(self.site)
         redirect.query_params.create(key='query1', value='param1')
 
-        response = RedirectFallbackMiddleware().process_request(self.request)
+        response = RedirectFallbackMiddleware(get_response).process_request(self.request)
 
         self.assertEquals(response.status_code, 301)
         self.assertEquals(response.url, 'http://example.com/dest?keep=this')
@@ -31,10 +36,10 @@ class RedirectFallbackMiddlewareTestCase(TestCase):
         redirect.query_params.create(key='query1', value='param1')
         request_from_root = RequestFactory().get('http://example.com/?query1=param1')
 
-        response = RedirectFallbackMiddleware().process_request(request_from_root)
+        response = RedirectFallbackMiddleware(get_response).process_request(request_from_root)
 
         self.assertEquals(response.status_code, 301)
         self.assertEquals(response.url, 'http://example.com/dest?keep=this')
 
     def test_redirect_not_found(self):
-        self.assertIsNone(RedirectFallbackMiddleware().process_request(self.request))
+        self.assertIsNone(RedirectFallbackMiddleware(get_response).process_request(self.request))
