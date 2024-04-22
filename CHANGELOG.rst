@@ -4,6 +4,9 @@ Changelog
 
 Unreleased
 ==========
+
+1.1.0 (Unreleased)
+==================
 * Introduced Django 4.2 support.
 * Dropped Support for Django<3.1
 * Dropped the dependency of `aldryn-translation-tools`
